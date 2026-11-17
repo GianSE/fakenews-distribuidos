@@ -1,0 +1,53 @@
+*Trabalho Fake News: divisão do vídeo* 🎬
+
+A apresentação tem 15 slides (~1 min cada) e o vídeo deve dar uns 13-14 min (o limite é de 10 a 15). Sem apêndice: tudo está dentro dos 15 slides, incluindo a tabela completa de speedup/eficiência (slide 10).
+
+*Quem roda as demos:* eu (Gian) fico com a tela compartilhada do início ao fim do vídeo, já testei tudo por aqui. Quando chega a vez da demo de vocês dois (Mario e Arthur), continuem narrando normalmente que eu rodo o comando na hora — combinamos um sinal tipo "pode rodar".
+
+*Demos ao vivo:* sequencial, threads/multiprocessing, distribuída e os testes rodam de verdade na tela, durante a gravação (são rápidas, <2,5s cada). A única coisa que eu preparo ANTES de gravar é subir os 4 workers da distribuída fora de quadro, pra não perder tempo abrindo 4 terminais ao vivo. O slide 8 é um resumo com os números, caso algo falhe na hora.
+
+No zip estão os códigos, os slides (PPTX e PDF) e o roteiro completo com as falas. Não precisa decorar, falem com as próprias palavras. Todo mundo de câmera ligada o tempo todo, e cada um diz em uma frase o que fez no trabalho.
+
+*1) Gian: 0:00 a 2:35 (slides 1 a 3)*
+• Capa: abre e cada um fala o próprio nome
+• Problema e modelo: matriz = população, 3 estados (ignorante, espalhador, inativo), vizinhança de Moore, atualização síncrona numa matriz nova
+• Sequencial: função calcular_linhas, que as 4 versões usam
+• Demo ao vivo (eu rodo): python FakeNews.py --limiar 2
+
+*2) Mario: 2:35 a 5:10 (slides 4 e 5)*
+• Divisão em faixas com dividir_linhas, halo de 1 linha, threads sem condição de corrida (cada thread escreve só em parciais[k]), join() como barreira
+• GIL: por que as threads não aceleram; multiprocessing com pool.map como barreira
+• Demo ao vivo (eu rodo, 2 terminais lado a lado, enquanto você narra): FakeNewsParalela.py --threads 4 e FakeNewsMultiprocessing.py --processos 4, ambos 400x400, 10 gerações, limiar 2
+
+*3) Arthur: 5:10 a 8:35 (slides 6 a 8)*
+• Coordenador + workers TCP, modo halo (só as fronteiras trafegam), barreira por geração
+• Demo ao vivo (eu rodo, enquanto você narra): só o coordenador (os 4 workers já estão rodando desde antes de gravar)
+• Protocolo: cabeçalho de 4 bytes, _receber_exatamente, TCP_NODELAY
+• Demo ao vivo (eu rodo, enquanto você narra): python -m unittest -v test_implementacoes.py (12 testes)
+• Slide 8: resumo com os números de referência das 5 execuções
+
+*4) Borghi: 8:35 a 12:05 (slides 9 a 12)*
+• Ambiente: Ryzen 5 5500U, 6 núcleos; 400x400, 20 gerações, 3 repetições
+• Speedup: halo 3,67x (eficiência 0,92), multiprocessing 3,12x, threads ~1x (GIL)
+• Cenários: matriz maior escala melhor; o halo troca ~50x menos dados que o modo faixa (6 KiB x 321 KiB por geração)
+• Gargalos (Amdahl ~9% x ~3%) e limitações
+
+*5) Gian: 12:05 a 13:05 (slide 13)*
+• As 10 melhorias + o efeito no alcance (19,9% → 4,4% com β = 0,6, bots 12,3%, céticos 3,5%)
+• Opcional: mostrar o GIF resultados/propagacao.gif
+
+*6) Mario: 13:05 a 13:50 (slides 14 e 15)*
+• Dificuldades e contribuição de cada um
+• Referências e encerramento: "Obrigado"
+
+*Antes de gravar*
+• Eu (Gian) deixo o ambiente pronto no meu computador (vou compartilhar a tela o vídeo todo) e subo os 4 workers fora de quadro antes de ligar a gravação:
+  python FakeNewsDistribuida.py worker --port 5001 (repetir com 5002, 5003, 5004)
+  Eles ficam no ar entre takes, não precisa reiniciar
+• Deixo 2 terminais lado a lado prontos para a demo threads/multiprocessing
+• Combinamos um sinal (tipo "pode rodar") pro momento certo de cada demo, já que quem fala não é quem digita
+• Se algo falhar na hora, não travem: comentem o resultado esperado e sigam (o slide 8 cobre isso)
+• Cada um confere se o texto do slide 14 (o que cada um fez) está certo
+• OBS: 1280x720, 30 fps, x264 + AAC 44,1 kHz
+• Nome do vídeo: AAAA-MM-DD - Grupo 07 - FakeNews.mp4
+• No fim do roteiro há perguntas prováveis do professor: todos devem saber responder (inclui "por que só o Gian roda os comandos?")

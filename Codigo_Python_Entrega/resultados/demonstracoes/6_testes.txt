@@ -1,0 +1,20 @@
+$ python -m unittest -v test_implementacoes.py
+# gerado em 2026-11-10 00:09
+
+test_distribuida_faixa_estendido (test_implementacoes.TestEquivalencia.test_distribuida_faixa_estendido) ... ok
+test_distribuida_faixa_original (test_implementacoes.TestEquivalencia.test_distribuida_faixa_original) ... ok
+test_distribuida_halo_estendido (test_implementacoes.TestEquivalencia.test_distribuida_halo_estendido) ... ok
+test_distribuida_halo_original (test_implementacoes.TestEquivalencia.test_distribuida_halo_original) ... ok
+test_multiprocessing_estendido (test_implementacoes.TestEquivalencia.test_multiprocessing_estendido) ... ok
+test_multiprocessing_original (test_implementacoes.TestEquivalencia.test_multiprocessing_original) ... ok
+test_threads_estendido (test_implementacoes.TestEquivalencia.test_threads_estendido) ... ok
+test_threads_original (test_implementacoes.TestEquivalencia.test_threads_original) ... ok
+test_bots_nunca_ficam_inativos (test_implementacoes.TestModelo.test_bots_nunca_ficam_inativos) ... ok
+test_divisao_cobre_todas_as_linhas (test_implementacoes.TestModelo.test_divisao_cobre_todas_as_linhas) ... ok
+test_extensoes_mudam_o_resultado (test_implementacoes.TestModelo.test_extensoes_mudam_o_resultado) ... ok
+test_modelo_padrao_igual_ao_fornecido (test_implementacoes.TestModelo.test_modelo_padrao_igual_ao_fornecido) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.834s
+
+OK

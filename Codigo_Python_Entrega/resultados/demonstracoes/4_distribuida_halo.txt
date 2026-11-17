@@ -1,0 +1,25 @@
+$ python FakeNewsDistribuida.py coordinator --workers 127.0.0.1:5001,127.0.0.1:5002,127.0.0.1:5003,127.0.0.1:5004 --linhas 400 --colunas 400 --geracoes 10 --limiar 2
+# gerado em 2026-11-10 00:09
+
+=== VERSÃO DISTRIBUÍDA: 4 trabalhadores | modo halo ===
+Geração 001 | Ignorantes:    143,880 | Espalhadores:      8,330 | Inativos:      7,790
+Geração 002 | Ignorantes:    134,815 | Espalhadores:      9,065 | Inativos:     16,120
+Geração 003 | Ignorantes:    126,033 | Espalhadores:      8,782 | Inativos:     25,185
+Geração 004 | Ignorantes:    118,231 | Espalhadores:      7,802 | Inativos:     33,967
+Geração 005 | Ignorantes:    110,998 | Espalhadores:      7,233 | Inativos:     41,769
+Geração 006 | Ignorantes:    104,419 | Espalhadores:      6,579 | Inativos:     49,002
+Geração 007 | Ignorantes:     98,551 | Espalhadores:      5,868 | Inativos:     55,581
+Geração 008 | Ignorantes:     93,430 | Espalhadores:      5,121 | Inativos:     61,449
+Geração 009 | Ignorantes:     88,968 | Espalhadores:      4,462 | Inativos:     66,570
+Geração 010 | Ignorantes:     85,122 | Espalhadores:      3,846 | Inativos:     71,032
+Bytes trafegados: 389,427 | cálculo: 0.9840 s | comunicação/sincronização: 0.0420 s
+
+=== RESULTADO FINAL ===
+Tempo total de execução: 1.0260 segundos
+Ignorantes finais: 85,122 (53.20%)
+Espalhadores finais: 3,846 (2.40%)
+Inativos finais: 71,032 (44.40%)
+--- Estatísticas adicionais ---
+Pico de espalhadores: 9,065 (geração 2)
+Alcance da fake news: 46.80% da população
+A propagação não se extinguiu dentro das gerações simuladas.

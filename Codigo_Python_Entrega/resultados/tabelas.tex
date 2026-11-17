@@ -1,0 +1,56 @@
+% Gerado por gerar_graficos.py
+\newcommand{\tabelaEscalabilidade}{%
+\begin{tabular}{lrrrr}\toprule
+Versão & $p$ & Tempo (s) & Speedup & Eficiência \\\midrule
+Sequencial & 1 & 5,427 $\pm$ 0,139 & 1,00 & 1,00 \\
+Threads & 1 & 5,430 $\pm$ 0,008 & 1,00 & 1,00 \\
+Threads & 2 & 5,642 $\pm$ 0,042 & 0,96 & 0,48 \\
+Threads & 4 & 6,667 $\pm$ 0,882 & 0,81 & 0,20 \\
+Threads & 8 & 5,782 $\pm$ 0,240 & 0,94 & 0,12 \\
+Multiprocessing & 1 & 5,461 $\pm$ 0,019 & 0,99 & 0,99 \\
+Multiprocessing & 2 & 2,859 $\pm$ 0,019 & 1,90 & 0,95 \\
+Multiprocessing & 4 & 1,741 $\pm$ 0,045 & 3,12 & 0,78 \\
+Multiprocessing & 8 & 1,669 $\pm$ 0,007 & 3,25 & 0,41 \\
+Distribuída (halo) & 1 & 5,293 $\pm$ 0,066 & 1,02 & 1,02 \\
+Distribuída (halo) & 2 & 2,746 $\pm$ 0,115 & 1,98 & 0,99 \\
+Distribuída (halo) & 4 & 1,481 $\pm$ 0,088 & 3,67 & 0,92 \\
+Distribuída (halo) & 8 & 1,595 $\pm$ 0,172 & 3,40 & 0,42 \\
+Distribuída (faixa) & 1 & 5,472 $\pm$ 0,027 & 0,99 & 0,99 \\
+Distribuída (faixa) & 2 & 2,900 $\pm$ 0,059 & 1,87 & 0,94 \\
+Distribuída (faixa) & 4 & 1,657 $\pm$ 0,015 & 3,27 & 0,82 \\
+Distribuída (faixa) & 8 & 1,641 $\pm$ 0,076 & 3,31 & 0,41 \\
+\bottomrule\end{tabular}}
+
+\newcommand{\tabelaCenarios}{%
+\begin{tabular}{lrrrrr}\toprule
+Cenário & Seq. & Threads & Multiproc. & Dist. halo & Dist. faixa \\\midrule
+Matriz: 200x200 & 1,30 & 1,40 (0,9x) & 0,52 (2,5x) & 0,39 (3,3x) & 0,45 (2,9x) \\
+Matriz: 400x400 & 5,43 & 6,67 (0,8x) & 1,74 (3,1x) & 1,48 (3,7x) & 1,66 (3,3x) \\
+Matriz: 800x800 & 21,88 & 22,49 (1,0x) & 6,57 (3,3x) & 5,92 (3,7x) & 6,69 (3,3x) \\
+Gerações: 10 & 2,60 & 2,75 (0,9x) & 0,81 (3,2x) & 0,70 (3,7x) & 0,79 (3,3x) \\
+Gerações: 20 & 5,43 & 6,67 (0,8x) & 1,74 (3,1x) & 1,48 (3,7x) & 1,66 (3,3x) \\
+Gerações: 40 & 10,41 & 10,97 (0,9x) & 3,27 (3,2x) & 2,77 (3,8x) & 3,29 (3,2x) \\
+Espalhadores: 1\% & 5,41 & 5,68 (1,0x) & 1,66 (3,3x) & 1,48 (3,6x) & 1,69 (3,2x) \\
+Espalhadores: 5\% & 5,43 & 6,67 (0,8x) & 1,74 (3,1x) & 1,48 (3,7x) & 1,66 (3,3x) \\
+Espalhadores: 10\% & 4,87 & 5,13 (0,9x) & 1,53 (3,2x) & 1,29 (3,8x) & 1,51 (3,2x) \\
+\bottomrule\end{tabular}}
+
+\newcommand{\tabelaComunicacao}{%
+\begin{tabular}{rrrrrr}\toprule
+$p$ & \multicolumn{2}{c}{KiB/geração} & Redução & \multicolumn{2}{c}{Comunic. (s)} \\
+ & faixa & halo & & faixa & halo \\\midrule
+1 & 317,6 & 16,8 & 18,9x & 0,266 & 0,228 \\
+2 & 318,8 & 18,6 & 17,2x & 0,257 & 0,127 \\
+4 & 321,1 & 22,1 & 14,5x & 0,253 & 0,069 \\
+8 & 325,8 & 29,1 & 11,2x & 0,255 & 0,053 \\
+\bottomrule\end{tabular}}
+
+\newcommand{\tabelaModelo}{%
+\begin{tabular}{lrrr}\toprule
+Versão & $p$ & Tempo (s) & Speedup \\\midrule
+Sequencial & 1 & 4,772 & 1,00 \\
+Threads & 4 & 5,019 & 0,95 \\
+Multiprocessing & 4 & 1,504 & 3,17 \\
+Distribuída (halo) & 4 & 1,278 & 3,73 \\
+Distribuída (faixa) & 4 & 1,560 & 3,06 \\
+\bottomrule\end{tabular}}

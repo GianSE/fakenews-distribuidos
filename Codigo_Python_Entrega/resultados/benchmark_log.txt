@@ -1,0 +1,77 @@
+Processador: AMD Ryzen 5 5500U with Radeon Graphics
+Núcleos lógicos: 12
+Memória RAM (visível ao SO): 9.9 GB
+Sistema operacional: Windows-11-10.0.26200-SP0
+Python: CPython 3.14.6
+GIL ativo: True
+Repetições por medição: 3
+Data: 2026-11-03 20:57
+[01/67] escalabilidade 400x400 g=20 p=0.05 original  sequencial        n=1 | 5.427 s | speedup 1.00 | OK
+[02/67] escalabilidade 400x400 g=20 p=0.05 original  threads           n=1 | 5.430 s | speedup 1.00 | OK
+[03/67] escalabilidade 400x400 g=20 p=0.05 original  threads           n=2 | 5.642 s | speedup 0.96 | OK
+[04/67] escalabilidade 400x400 g=20 p=0.05 original  threads           n=4 | 6.667 s | speedup 0.81 | OK
+[05/67] escalabilidade 400x400 g=20 p=0.05 original  threads           n=8 | 5.783 s | speedup 0.94 | OK
+[06/67] escalabilidade 400x400 g=20 p=0.05 original  multiprocessing   n=1 | 5.461 s | speedup 0.99 | OK
+[07/67] escalabilidade 400x400 g=20 p=0.05 original  multiprocessing   n=2 | 2.859 s | speedup 1.90 | OK
+[08/67] escalabilidade 400x400 g=20 p=0.05 original  multiprocessing   n=4 | 1.741 s | speedup 3.12 | OK
+[09/67] escalabilidade 400x400 g=20 p=0.05 original  multiprocessing   n=8 | 1.669 s | speedup 3.25 | OK
+[10/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-halo  n=1 | 5.292 s | speedup 1.03 | OK
+[11/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-halo  n=2 | 2.746 s | speedup 1.98 | OK
+[12/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-halo  n=4 | 1.481 s | speedup 3.66 | OK
+[13/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-halo  n=8 | 1.595 s | speedup 3.40 | OK
+[14/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-faixa n=1 | 5.472 s | speedup 0.99 | OK
+[15/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-faixa n=2 | 2.900 s | speedup 1.87 | OK
+[16/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-faixa n=4 | 1.657 s | speedup 3.27 | OK
+[17/67] escalabilidade 400x400 g=20 p=0.05 original  distribuida-faixa n=8 | 1.641 s | speedup 3.31 | OK
+[18/67] tamanho        200x200 g=20 p=0.05 original  sequencial        n=1 | 1.297 s | speedup 1.00 | OK
+[19/67] tamanho        200x200 g=20 p=0.05 original  threads           n=4 | 1.402 s | speedup 0.93 | OK
+[20/67] tamanho        200x200 g=20 p=0.05 original  multiprocessing   n=4 | 0.517 s | speedup 2.51 | OK
+[21/67] tamanho        200x200 g=20 p=0.05 original  distribuida-halo  n=4 | 0.390 s | speedup 3.32 | OK
+[22/67] tamanho        200x200 g=20 p=0.05 original  distribuida-faixa n=4 | 0.454 s | speedup 2.86 | OK
+[23/67] tamanho        400x400 g=20 p=0.05 original  sequencial        n=1 | 5.427 s | speedup 1.00 | OK
+[24/67] tamanho        400x400 g=20 p=0.05 original  threads           n=4 | 6.667 s | speedup 0.81 | OK
+[25/67] tamanho        400x400 g=20 p=0.05 original  multiprocessing   n=4 | 1.741 s | speedup 3.12 | OK
+[26/67] tamanho        400x400 g=20 p=0.05 original  distribuida-halo  n=4 | 1.481 s | speedup 3.66 | OK
+[27/67] tamanho        400x400 g=20 p=0.05 original  distribuida-faixa n=4 | 1.657 s | speedup 3.27 | OK
+[28/67] tamanho        800x800 g=20 p=0.05 original  sequencial        n=1 | 21.884 s | speedup 1.00 | OK
+[29/67] tamanho        800x800 g=20 p=0.05 original  threads           n=4 | 22.488 s | speedup 0.97 | OK
+[30/67] tamanho        800x800 g=20 p=0.05 original  multiprocessing   n=4 | 6.567 s | speedup 3.33 | OK
+[31/67] tamanho        800x800 g=20 p=0.05 original  distribuida-halo  n=4 | 5.918 s | speedup 3.70 | OK
+[32/67] tamanho        800x800 g=20 p=0.05 original  distribuida-faixa n=4 | 6.694 s | speedup 3.27 | OK
+[33/67] geracoes       400x400 g=10 p=0.05 original  sequencial        n=1 | 2.596 s | speedup 1.00 | OK
+[34/67] geracoes       400x400 g=10 p=0.05 original  threads           n=4 | 2.745 s | speedup 0.95 | OK
+[35/67] geracoes       400x400 g=10 p=0.05 original  multiprocessing   n=4 | 0.808 s | speedup 3.21 | OK
+[36/67] geracoes       400x400 g=10 p=0.05 original  distribuida-halo  n=4 | 0.698 s | speedup 3.72 | OK
+[37/67] geracoes       400x400 g=10 p=0.05 original  distribuida-faixa n=4 | 0.792 s | speedup 3.28 | OK
+[38/67] geracoes       400x400 g=20 p=0.05 original  sequencial        n=1 | 5.427 s | speedup 1.00 | OK
+[39/67] geracoes       400x400 g=20 p=0.05 original  threads           n=4 | 6.667 s | speedup 0.81 | OK
+[40/67] geracoes       400x400 g=20 p=0.05 original  multiprocessing   n=4 | 1.741 s | speedup 3.12 | OK
+[41/67] geracoes       400x400 g=20 p=0.05 original  distribuida-halo  n=4 | 1.481 s | speedup 3.66 | OK
+[42/67] geracoes       400x400 g=20 p=0.05 original  distribuida-faixa n=4 | 1.657 s | speedup 3.27 | OK
+[43/67] geracoes       400x400 g=40 p=0.05 original  sequencial        n=1 | 10.413 s | speedup 1.00 | OK
+[44/67] geracoes       400x400 g=40 p=0.05 original  threads           n=4 | 10.968 s | speedup 0.95 | OK
+[45/67] geracoes       400x400 g=40 p=0.05 original  multiprocessing   n=4 | 3.267 s | speedup 3.19 | OK
+[46/67] geracoes       400x400 g=40 p=0.05 original  distribuida-halo  n=4 | 2.766 s | speedup 3.76 | OK
+[47/67] geracoes       400x400 g=40 p=0.05 original  distribuida-faixa n=4 | 3.294 s | speedup 3.16 | OK
+[48/67] percentual     400x400 g=20 p=0.01 original  sequencial        n=1 | 5.410 s | speedup 1.00 | OK
+[49/67] percentual     400x400 g=20 p=0.01 original  threads           n=4 | 5.677 s | speedup 0.95 | OK
+[50/67] percentual     400x400 g=20 p=0.01 original  multiprocessing   n=4 | 1.662 s | speedup 3.26 | OK
+[51/67] percentual     400x400 g=20 p=0.01 original  distribuida-halo  n=4 | 1.482 s | speedup 3.65 | OK
+[52/67] percentual     400x400 g=20 p=0.01 original  distribuida-faixa n=4 | 1.687 s | speedup 3.21 | OK
+[53/67] percentual     400x400 g=20 p=0.05 original  sequencial        n=1 | 5.427 s | speedup 1.00 | OK
+[54/67] percentual     400x400 g=20 p=0.05 original  threads           n=4 | 6.667 s | speedup 0.81 | OK
+[55/67] percentual     400x400 g=20 p=0.05 original  multiprocessing   n=4 | 1.741 s | speedup 3.12 | OK
+[56/67] percentual     400x400 g=20 p=0.05 original  distribuida-halo  n=4 | 1.481 s | speedup 3.66 | OK
+[57/67] percentual     400x400 g=20 p=0.05 original  distribuida-faixa n=4 | 1.657 s | speedup 3.27 | OK
+[58/67] percentual     400x400 g=20 p=0.10 original  sequencial        n=1 | 4.866 s | speedup 1.00 | OK
+[59/67] percentual     400x400 g=20 p=0.10 original  threads           n=4 | 5.126 s | speedup 0.95 | OK
+[60/67] percentual     400x400 g=20 p=0.10 original  multiprocessing   n=4 | 1.526 s | speedup 3.19 | OK
+[61/67] percentual     400x400 g=20 p=0.10 original  distribuida-halo  n=4 | 1.292 s | speedup 3.77 | OK
+[62/67] percentual     400x400 g=20 p=0.10 original  distribuida-faixa n=4 | 1.511 s | speedup 3.22 | OK
+[63/67] modelo         400x400 g=20 p=0.05 estendido sequencial        n=1 | 4.772 s | speedup 1.00 | OK
+[64/67] modelo         400x400 g=20 p=0.05 estendido threads           n=4 | 5.019 s | speedup 0.95 | OK
+[65/67] modelo         400x400 g=20 p=0.05 estendido multiprocessing   n=4 | 1.504 s | speedup 3.17 | OK
+[66/67] modelo         400x400 g=20 p=0.05 estendido distribuida-halo  n=4 | 1.278 s | speedup 3.73 | OK
+[67/67] modelo         400x400 g=20 p=0.05 estendido distribuida-faixa n=4 | 1.560 s | speedup 3.06 | OK
+
+Resultados salvos em: C:\Users\gian\Desktop\faculdade\sistemas-distribuidos\trabalho-pratico-fakenews\Codigo_Python_Entrega\resultados\benchmark.csv

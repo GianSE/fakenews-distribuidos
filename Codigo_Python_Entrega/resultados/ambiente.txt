@@ -1,0 +1,8 @@
+Processador: AMD Ryzen 5 5500U with Radeon Graphics
+Núcleos lógicos: 12
+Memória RAM (visível ao SO): 9.9 GB
+Sistema operacional: Windows-11-10.0.26200-SP0
+Python: CPython 3.14.6
+GIL ativo: True
+Repetições por medição: 3
+Data: 2026-11-03 20:57
