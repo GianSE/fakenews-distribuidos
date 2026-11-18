@@ -151,27 +151,29 @@ guia: digam com as próprias palavras, sem ler.
 
 ### Slide 1, capa (0:20)
 
-"Boa tarde, somos o grupo 7." Cada integrante diz o próprio nome. "Vamos
-mostrar a simulação da propagação de fake news nas versões sequencial,
-paralela e distribuída, e comparar o desempenho."
+"Oi, boa tarde! A gente é o grupo 7." Cada integrante diz o próprio nome.
+"Nosso trabalho simula como uma fake news se espalha numa população, e a
+gente fez isso de quatro jeitos: sequencial, com threads, com processos e
+distribuído em rede. No fim, a gente compara o desempenho de cada um."
 
 ### Slide 2, problema e modelo (1:00)
 
-"O problema é simular como uma notícia falsa se espalha numa população
-representada por uma matriz: cada célula é uma pessoa. Cada pessoa tem três
-estados: ignorante, espalhador e inativo. A vizinhança é a de Moore, os
-oito vizinhos em volta. Um ignorante vira espalhador quando tem pelo menos
-'limiar' vizinhos espalhadores, o espalhador fica inativo na geração
-seguinte e o inativo continua inativo. A atualização é síncrona: todas as
-células olham a mesma geração anterior. Por isso a próxima geração é
-escrita numa matriz nova."
+"A ideia é simples: a população é uma matriz e cada célula é uma pessoa.
+Cada pessoa pode estar em três estados: ignorante, que ainda não viu a
+notícia; espalhador, que acreditou e tá repassando; e inativo, que já
+repassou e cansou do assunto. Cada pessoa olha pros oito vizinhos em volta.
+Se pelo menos 'limiar' vizinhos estão espalhando, ela começa a espalhar
+também; na geração seguinte ela fica inativa e fica assim até o fim. Um
+detalhe importante: todo mundo olha a geração anterior ao mesmo tempo,
+então a geração nova é escrita numa matriz separada."
 
 ### Slide 3, solução sequencial (1:15, com demo)
 
-"Isolamos a regra na função `calcular_linhas`, que calcula só um intervalo
-de linhas e escreve numa matriz nova. As quatro versões chamam essa mesma
-função, então a lógica é idêntica. O que muda é só quem calcula cada
-pedaço."
+"A regra toda fica numa função só, a `calcular_linhas`. Ela recebe um
+pedaço das linhas, passa por cada célula, conta os vizinhos espalhando e
+escreve o resultado numa matriz nova. O legal é que as quatro versões usam
+essa mesma função, então a lógica é igualzinha em todas; o que muda é só
+quem calcula cada pedaço."
 
 **Demo ao vivo (20 s, Gian roda):** `python FakeNews.py --limiar 2`.
 Mostrar as gerações passando e as estatísticas novas no final: pico de
@@ -183,21 +185,24 @@ espalhadores, alcance e geração de extinção.
 
 ### Slide 4, divisão e threads (1:00)
 
-"Dividimos a matriz em faixas horizontais, uma por thread, processo ou
-worker. A `dividir_linhas` equilibra a carga, e o resto da divisão vai para
-as primeiras faixas. Como Moore só alcança uma linha, cada faixa lê uma
-linha de halo acima e uma abaixo. Na versão com threads, cada faixa tem uma
-`threading.Thread` explícita. Não há condição de corrida: a grade atual só
-é lida e a thread k escreve só em `parciais[k]`. O `join` é a barreira: a
-nova geração só é montada quando todas terminam."
+"Pra paralelizar, a gente corta a matriz em faixas horizontais, uma pra
+cada thread, processo ou worker. A `dividir_linhas` deixa as faixas do
+mesmo tamanho, e se sobrar linha ela vai pras primeiras. Só que a célula da
+borda precisa ver o vizinho da faixa do lado, então cada faixa lê uma linha
+extra em cima e uma embaixo: isso é o halo. Na versão com threads, cada
+faixa ganha uma `threading.Thread`. E não tem condição de corrida, porque
+ninguém escreve na grade atual e cada thread só mexe no seu `parciais[k]`.
+O `join` funciona como barreira: só monta a próxima geração quando todas
+terminaram."
 
 ### Slide 5, GIL e multiprocessing (1:35, com demo)
 
-"Só que as threads não aceleram. No CPython, o GIL deixa uma única thread
-executar bytecode por vez. O enunciado permite multiprocessing: cada
-processo tem o próprio interpretador e o próprio GIL. A divisão é a mesma,
-as tarefas com a faixa e o halo em bytes são montadas por nós, e o
-`pool.map` funciona como barreira."
+"Só que aí veio a surpresa: as threads não deixaram nada mais rápido. A
+culpa é do GIL: no Python padrão só uma thread roda por vez, e como nosso
+cálculo é só CPU, colocar mais threads não ajuda. A saída foi usar
+multiprocessing, que o enunciado permite: cada processo tem seu próprio
+Python e seu próprio GIL, então aí sim roda em paralelo de verdade. A
+divisão em faixas é a mesma, e o `pool.map` faz o papel de barreira."
 
 **Demo ao vivo (35 s, Gian roda enquanto o Mario continua falando):**
 rodar os dois comandos, um em cada terminal, e comparar os tempos. Mostrar
@@ -214,13 +219,13 @@ python FakeNewsMultiprocessing.py --linhas 400 --colunas 400 --geracoes 10 --lim
 
 ### Slide 6, arquitetura distribuída (1:20, com demo)
 
-"Na distribuída há um coordenador e N workers. Cada worker é um servidor
-TCP e pode rodar em outra máquina. A melhoria principal é o modo halo: o
-worker guarda a sua faixa e, a cada geração, recebe só as duas linhas
-vizinhas e devolve as suas duas fronteiras e a contagem de estados. O
-coordenador só começa a geração seguinte quando todos respondem: essa é a
-barreira. Mantivemos o modo faixa, em que a faixa inteira vai e volta, para
-comparar."
+"Na versão distribuída tem um coordenador e vários workers. Cada worker é
+um servidor TCP e pode rodar em outra máquina. A sacada principal foi o
+modo halo: cada worker fica com a sua faixa guardada e, a cada geração, só
+recebe as duas linhas vizinhas e devolve as duas linhas de borda e a
+contagem. O coordenador só começa a próxima geração quando todo mundo
+respondeu, essa é a barreira. A gente deixou também o modo faixa, que foi
+nossa primeira versão e manda a faixa inteira toda vez, só pra comparar."
 
 **Demo ao vivo (20 s, Gian roda enquanto o Arthur continua falando):** os
 4 workers já estão rodando desde antes de começar a gravação (fora de
@@ -235,14 +240,15 @@ worker na outra e usar o IP dela.
 
 ### Slide 7, protocolo e corretude (1:15, com demo)
 
-"Cada mensagem leva um cabeçalho de 4 bytes com o tamanho, porque TCP é
-fluxo e um `recv` pode trazer só parte da mensagem; por isso existe o
-`_receber_exatamente`. O `TCP_NODELAY` desliga o algoritmo de Nagle, já que
-as mensagens são pequenas, e o pickle só deve ser usado em rede confiável.
-Para garantir a corretude, 12 testes comparam cada versão com a sequencial,
-geração a geração, no modelo original e no estendido. O sorteio do modelo
-probabilístico é um hash da semente, da geração e da posição, então não
-importa quem calcula a célula."
+"Sobre o protocolo: o TCP não separa as mensagens, um `recv` pode vir pela
+metade. Então toda mensagem começa com 4 bytes dizendo o tamanho, e o
+`_receber_exatamente` fica lendo até completar. Também ligamos o
+`TCP_NODELAY`, pra ele mandar as mensagens pequenas na hora em vez de ficar
+segurando. E pra ter certeza de que tá tudo certo, temos 12 testes que
+comparam cada versão com a sequencial, geração por geração, no modelo
+original e no estendido. Até o sorteio do modelo probabilístico dá igual,
+porque ele vem de um hash da posição da célula, então não importa quem
+calcula."
 
 **Demo ao vivo (15 s, Gian roda enquanto o Arthur continua falando):**
 `python -m unittest -v test_implementacoes.py`, mostrando os 12 testes
@@ -250,14 +256,13 @@ passando.
 
 ### Slide 8, resumo das execuções (0:50)
 
-"Este slide resume os números das execuções que acabamos de mostrar: a
-sequencial levou 2,16 segundos, as threads 2,20 (iguais, por causa do
-GIL), o multiprocessing 0,78, e a distribuída 1,03 no modo halo e 1,11 no
-modo faixa, que rodamos antes para comparar. O ponto principal é que a
-última geração é idêntica nas cinco execuções, e o modo halo trafegou 389
-KB contra 3,29 MB no modo faixa. Os valores de tempo variam um pouco a
-cada execução; os números de desempenho que valem para a análise são os
-do benchmark, que o Borghi mostra agora."
+"Aqui tá o resumo do que a gente acabou de rodar: o sequencial levou 2,16
+segundos, as threads 2,20, praticamente igual por causa do GIL, o
+multiprocessing 0,78 e a distribuída 1,03 no modo halo e 1,11 no modo
+faixa, que rodamos antes pra comparar. O mais importante: a última geração
+deu exatamente igual nas cinco. E o halo mandou 389 KB pela rede, contra
+3,29 MB do modo faixa. O tempo varia um pouco a cada execução, então os
+números pra valer são os do benchmark, que o Borghi mostra agora."
 
 **Sua parte:** dizer em uma frase o que você fez.
 
@@ -265,40 +270,40 @@ do benchmark, que o Borghi mostra agora."
 
 ### Slide 9, ambiente e metodologia (0:45)
 
-"Tudo rodou num Ryzen 5 5500U, com 6 núcleos físicos e 12 lógicos, Windows
-11 e Python 3.14 com GIL. Os workers TCP rodaram como processos na mesma
-máquina. O cenário base é 400 por 400, 20 gerações e 5% de espalhadores.
-Variamos um fator por vez, com 1, 2, 4 e 8 trabalhadores, e repetimos cada
-medição três vezes."
+"Pra medir direito, rodamos tudo num Ryzen 5 5500U, que tem 6 núcleos,
+com Windows 11 e Python 3.14. Os workers rodaram na mesma máquina. O
+cenário base é uma matriz 400 por 400, com 20 gerações e 5% de
+espalhadores. A gente mudou um fator por vez, testou com 1, 2, 4 e 8
+trabalhadores e repetiu cada medição três vezes."
 
 ### Slide 10, speedup e eficiência (1:00)
 
-"Esta é a tabela completa: tempo, speedup e eficiência para 1, 2, 4 e 8
-trabalhadores, nas 5 versões. O sequencial leva 5,43 segundos. As threads
-ficam entre 0,81 e 1 vez, por causa do GIL. O multiprocessing chega a 3,12
-vezes com 4 processos, eficiência de 0,78. A distribuída no modo halo é a
-melhor: 3,67 vezes com 4 workers, eficiência de 0,92. Com 8 o ganho não
-aumenta, porque a CPU tem só 6 núcleos físicos."
+"Essa é a tabela completa. O sequencial leva 5,43 segundos. As threads
+ficam ali em 1 vez, ou seja, nenhum ganho, por causa do GIL. O
+multiprocessing chega a 3,12 vezes mais rápido com 4 processos. E a
+distribuída no modo halo foi a melhor: 3,67 vezes com 4 workers, com
+eficiência de 0,92. Com 8 não melhora, porque a CPU só tem 6 núcleos."
 
 ### Slide 11, cenários e comunicação (1:00)
 
-"À esquerda: quanto maior a matriz, maior o speedup. O modo halo vai de
-3,32 vezes em 200 por 200 para 3,70 em 800 por 800, porque o cálculo cresce
-com o quadrado do lado e a fronteira só com o lado. Variar as gerações e o
-percentual de espalhadores quase não muda o speedup. À direita: no modo
-faixa a grade vai e volta, cerca de 321 KiB por geração. No modo halo, em
-regime, são uns 6 KiB, umas 50 vezes menos. A comunicação e a espera na
-barreira ocupam 5% do tempo no halo, contra 15% no modo faixa."
+"No gráfico da esquerda dá pra ver que quanto maior a matriz, melhor o
+ganho: o halo vai de 3,32 vezes no 200 por 200 pra 3,70 no 800 por 800.
+Isso porque o cálculo cresce bem mais rápido que a borda que precisa ser
+trocada. Mudar gerações ou espalhadores quase não muda nada. No da direita,
+a comunicação: o modo faixa manda uns 321 KiB por geração, e o halo uns 6,
+umas 50 vezes menos. No halo, comunicação e espera comem só 5% do tempo,
+contra 15% no modo faixa."
 
 ### Slide 12, gargalos e limitações (0:45)
 
-"As threads não ganham por causa do GIL. No multiprocessing, o processo
-principal serializa as faixas e conta os estados: pela lei de Amdahl, uns
-9% do trabalho ficam sequenciais. No modo halo isso cai para uns 3%, porque
-o estado e a contagem ficam nos workers. Há uma barreira por geração, então
-todos esperam o mais lento. As limitações: testamos numa máquina só, não há
-tolerância a falhas, o pickle não é seguro com dados desconhecidos e as
-threads só aceleram em Python sem GIL."
+"Resumindo onde perde tempo: as threads travam no GIL. No
+multiprocessing, o processo principal ainda empacota as faixas e conta os
+estados sozinho, então pela lei de Amdahl uns 9% fica sequencial. No halo
+isso cai pra uns 3%, porque os workers guardam o estado e contam sozinhos.
+E como tem barreira a cada geração, todo mundo espera o mais lento. O que
+ainda dá pra melhorar: só testamos numa máquina, se um worker cair a
+simulação para, o pickle só é seguro numa rede confiável, e as threads só
+ganhariam num Python sem GIL."
 
 **Sua parte:** dizer em uma frase o que você fez.
 
@@ -306,14 +311,14 @@ threads só aceleram em Python sem GIL."
 
 ### Slide 13, dez melhorias (1:00)
 
-"Implementamos dez melhorias. No modelo, todas desligadas por padrão:
-convencimento probabilístico, influenciadores, bots, céticos e estatísticas
-extras. Na computação: a versão com multiprocessing, o modo halo, o sorteio
-por contador, a visualização e os testes com métricas de comunicação. No
-modelo original com limiar 2, 19,9% da população recebe a notícia. Com
-convencimento probabilístico, beta 0,6, o alcance cai para 4,4%. Os
-influenciadores sobem para 7,6%, os bots mantêm a notícia viva e chegam a
-12,3%, e os céticos freiam para 3,5%."
+"Além do básico, a gente fez dez melhorias. No modelo, todas desligadas
+por padrão: convencimento probabilístico, influenciadores, bots, céticos e
+umas estatísticas a mais. Na parte de computação: o multiprocessing, o modo
+halo, o sorteio por contador, a visualização e os testes com métricas de
+comunicação. E dá pra ver o efeito: no modelo original a notícia chega em
+19,9% da população. Com o convencimento probabilístico cai pra 4,4%. Os
+influenciadores sobem pra 7,6%, os bots mantêm a notícia viva e chegam em
+12,3%, e os céticos seguram em 3,5%."
 
 **Opcional (10 s):** mostrar `resultados/propagacao.gif`.
 
@@ -321,16 +326,17 @@ influenciadores sobem para 7,6%, os bots mantêm a notícia viva e chegam a
 
 ### Slide 14, dificuldades e equipe (0:35)
 
-"As principais dificuldades foram manter a atualização síncrona ao dividir
-a matriz, acertar os índices das fronteiras, tratar o TCP como fluxo de
-bytes, entender por que as threads eram mais lentas, deixar o sorteio igual
-em qualquer divisão e algumas particularidades do Windows. À direita está a
-contribuição de cada um, que cada integrante já contou na sua parte."
+"O que mais deu trabalho: manter todo mundo olhando a mesma geração
+depois de dividir a matriz, acertar os índices das bordas, lidar com o TCP
+mandando mensagem pela metade, entender por que as threads eram mais
+lentas, fazer o sorteio dar igual em qualquer divisão e umas manias do
+Windows. Do lado direito tá o que cada um fez, que cada um já contou na sua
+parte."
 
 ### Slide 15, referências (0:10)
 
-"As referências estão em ABNT, incluindo o uso de IA generativa, como pede
-o enunciado. Obrigado, ficamos à disposição para perguntas."
+"Aqui estão as referências que a gente usou, incluindo o uso de IA, como o
+enunciado pede. É isso, obrigado! Ficamos à disposição pra perguntas."
 
 ---
 
